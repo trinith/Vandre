@@ -18,7 +18,7 @@ void DeadEntityCleanupSystem::OnExecute(float dt)
 	auto indentScope = Logger::CreateIndentScope();
 	for (auto entity : view)
 	{
-		Logger::WriteLine(EntityUtils::GetEntityName(registry, entity), "} has been destroyed.");
+		Logger::WriteLine(EntityUtils::GetEntityName(registry, entity), " has been destroyed.");
 		registry.destroy(entity);
 	}
 }

@@ -1,10 +1,11 @@
 #pragma once
 
+#include <optional>
+#include <Vector2f.h>
 #include <Systems/System.h>
 
 namespace Components
 {
-	struct NextPositionComponent;
 	struct PositionComponent;
 	struct VelocityComponent;
 }
@@ -25,10 +26,9 @@ namespace Systems
 	private:
 		void TickEntity(
 			float dt,
-			std::string_view entityName,
-			Components::NextPositionComponent& nextPos,
-			const Components::PositionComponent& pos,
-			const Components::VelocityComponent& vel
+			entt::entity entity,
+			const Components::PositionComponent& positionComponent,
+			const Components::VelocityComponent& velocityComponent
 		);
 	};
 }

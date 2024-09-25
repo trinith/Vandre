@@ -23,7 +23,6 @@ entt::entity CreateEntity(entt::registry& registry, std::string_view name, Vecto
 
 	registry.emplace<NameComponent>(entity, std::string{ name });
 	registry.emplace<PositionComponent>(entity, Vector2f{ 0.f, 0.f });
-	registry.emplace<NextPositionComponent>(entity, Vector2f{ 0.f, 0.f });
 	registry.emplace<VelocityComponent>(entity, velocity);
 
 	return entity;
@@ -50,7 +49,7 @@ int main()
 			function _init()
 				CreateTestEntity("luaEntityA", 0, 0)
 				CreateTestEntity("luaEntityB", 1, 0)
-				CreateTestEntity("luaEntityC", 0, 0)
+				CreateTestEntity("luaEntityC", 0.75, 0)
 			end
 		)");
 	}
@@ -68,7 +67,7 @@ int main()
 	systemRegistry.RegisterSystem<Systems::PositionFinalizeSystem>(registry);
 	systemRegistry.RegisterSystem<Systems::DeadEntityCleanupSystem>(registry);
 
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		Logger::WriteLine("TICK ", i, " - BEGIN");
 		{

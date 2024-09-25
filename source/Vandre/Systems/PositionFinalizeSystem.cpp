@@ -22,24 +22,35 @@ void PositionFinalizeSystem::OnExecute(float dt)
 		TickEntity(
 			dt,
 			entity,
-			EntityUtils::GetEntityName(registry, entity),
 			view.get<PositionComponent>(entity),
 			view.get<const NextPositionComponent>(entity)
 		);
 	}
 }
 
-void PositionFinalizeSystem::TickEntity(float dt, entt::entity entity, std::string_view entityName, PositionComponent& pos, const NextPositionComponent& nextPos)
+void PositionFinalizeSystem::TickEntity(
+	float dt,
+	entt::entity entity,
+	Components::PositionComponent& positionComponent,
+	const Components::NextPositionComponent& nextPositionComponent
+)
 {
 	auto& registry = GetRegistry();
-	if (pos.position.x >= 3 && !registry.any_of<DestroyEntityComponent>(entity))
+	const std::string entityName = EntityUtils::GetEntityName(registry, entity);
+
+	const Vector2f& nextPosition = nextPositionComponent.position;
+
+	if (nextPosition.x >= 2)
 	{
 		Logger::WriteLine(entityName, " is out of bounds and will be flagged for removal.");
-		registry.emplace<DestroyEntityComponent>(entity);
-		return;
+		registry.emplace_or_replace<DestroyEntityComponent>(entity);
+	}
+	else
+	{
+		Vector2f oldPos = positionComponent.position;
+		positionComponent.position = nextPosition;
+		Logger::WriteLine(entityName, " has moved from ", oldPos, " to ", positionComponent.position, ".");
 	}
 
-	Vector2f oldPos = pos.position;
-	pos.position = nextPos.position;
-	Logger::WriteLine(entityName, " has moved from ", oldPos, " to ", pos.position, ".");
+	registry.remove<NextPositionComponent>(entity);
 }

@@ -25,9 +25,8 @@ namespace Systems
 		void TickEntity(
 			float dt,
 			entt::entity entity,
-			std::string_view entityName,
-			Components::PositionComponent& pos,
-			const Components::NextPositionComponent& nextPos
+			Components::PositionComponent& positionComponent,
+			const Components::NextPositionComponent& nextPositionComponent
 		);
 	};
 }

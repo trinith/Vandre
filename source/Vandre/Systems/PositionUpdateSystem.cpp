@@ -14,15 +14,14 @@ void PositionUpdateSystem::OnExecute(float dt)
 {
 	Logger::WriteLine("PositionUpdateSystem::OnExecute");
 	auto& registry = GetRegistry();
-	auto view = registry.view<NextPositionComponent, const PositionComponent, const VelocityComponent>();
+	auto view = registry.view<const PositionComponent, const VelocityComponent>();
 
 	auto indentScope = Logger::CreateIndentScope();
 	for (auto entity : view)
 	{
 		TickEntity(
 			dt,
-			EntityUtils::GetEntityName(registry, entity),
-			view.get<NextPositionComponent>(entity),
+			entity,
 			view.get<const PositionComponent>(entity),
 			view.get<const VelocityComponent>(entity)
 		);
@@ -31,22 +30,28 @@ void PositionUpdateSystem::OnExecute(float dt)
 
 void PositionUpdateSystem::TickEntity(
 	float dt,
-	std::string_view entityName,
-	NextPositionComponent& nextPos,
-	const PositionComponent& pos,
-	const VelocityComponent& vel
+	entt::entity entity,
+	const Components::PositionComponent& positionComponent,
+	const Components::VelocityComponent& velocityComponent
 )
 {
-	if (vel.velocity.x == 0 && vel.velocity.y == 0)
+	const Vector2f& position = positionComponent.position;
+	const Vector2f velocity = velocityComponent.velocity;
+	
+	auto& registry = GetRegistry();
+	const std::string entityName = EntityUtils::GetEntityName(registry, entity);
+
+	if (velocity.x == 0 && velocity.y == 0)
 	{
-		Logger::WriteLine(entityName ," did not set next position, velocity is zero.");
+		Logger::WriteLine(entityName, " did not set next position, velocity is zero.");
 		return;
 	}
 
-	nextPos.position = {
-		pos.position.x + dt * vel.velocity.x,
-		pos.position.y + dt * vel.velocity.y
+	Vector2 nextPosition{
+		position.x + dt * velocity.x,
+		position.y + dt * velocity.y
 	};
 
-	Logger::WriteLine(entityName, " next position set to ", nextPos.position, ".");
+	registry.emplace_or_replace<NextPositionComponent>(entity, nextPosition);
+	Logger::WriteLine(entityName, " next position set to ", nextPosition, ".");
 }
