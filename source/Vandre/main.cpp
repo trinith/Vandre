@@ -1,9 +1,5 @@
-#include <iostream>
-#include <vector>
-
 #include <entt.hpp>
-#include <EntityUtils.h>
-#include <MethodHelperMacros.h>
+
 #include <VandreLogging.h>
 
 #include <Components/DestroyEntityComponent.h>
