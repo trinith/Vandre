@@ -1,4 +1,7 @@
+#define SOL_ALL_SAFETIES_ON 1
+
 #include <entt.hpp>
+#include <sol/sol.hpp>
 
 #include <VandreLogging.h>
 
@@ -32,9 +35,33 @@ int main()
 
 	entt::registry registry;
 
-	CreateEntity(registry, "entityA", { 0.f, 0.f });
-	CreateEntity(registry, "entityB", { 1.f, 0.f });
-	CreateEntity(registry, "entityC", { 0.f, 0.f });
+	sol::state lua;
+	lua.open_libraries(sol::lib::base);
+
+	lua["CreateTestEntity"] =
+		[&registry](const std::string& entityName, float dx, float dy)
+		{
+			CreateEntity(registry, entityName, { dx, dy });
+		};
+
+	try
+	{
+		lua.script(R"(
+			function _init()
+				CreateTestEntity("luaEntityA", 0, 0)
+				CreateTestEntity("luaEntityB", 1, 0)
+				CreateTestEntity("luaEntityC", 0, 0)
+			end
+		)");
+	}
+	catch (const std::exception& e)
+	{
+		Logger::WriteLine(e.what());
+	}
+
+	std::string initFunction = "_init";
+	if (lua[initFunction].valid())
+		lua[initFunction].call();
 
 	Systems::SystemRegistry systemRegistry;
 	systemRegistry.RegisterSystem<Systems::PositionUpdateSystem>(registry);
