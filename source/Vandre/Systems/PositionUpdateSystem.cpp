@@ -5,6 +5,7 @@
 #include <VandreLogging.h>
 #include <Components/NextPositionComponent.h>
 #include <Components/PositionComponent.h>
+#include <Components/PreviousPositionComponent.h>
 #include <Components/VelocityComponent.h>
 
 using namespace Components;
@@ -37,9 +38,11 @@ void PositionUpdateSystem::TickEntity(
 {
 	const Vector2f& position = positionComponent.position;
 	const Vector2f velocity = velocityComponent.velocity;
-	
+
 	auto& registry = GetRegistry();
 	const std::string entityName = EntityUtils::GetEntityName(registry, entity);
+
+	registry.remove<Components::PreviousPositionComponent>(entity);
 
 	if (velocity.x == 0 && velocity.y == 0)
 	{

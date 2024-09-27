@@ -73,6 +73,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>C:\Repos\Vandre\vendor\lua\include;$(ProjectDir);C:\Repos\Vandre\vendor\sol\;C:\Repos\Vandre\vendor\entt\;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Repos\Vandre\vendor\lua;$(LibraryPath)</LibraryPath>
+    <CopyLocalDeploymentContent>true</CopyLocalDeploymentContent>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -136,30 +137,48 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EntityFactory.cpp" />
+    <ClCompile Include="LuaEnttBindings.cpp" />
+    <ClCompile Include="LuaManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Systems\DeadEntityCleanupSystem.cpp" />
     <ClCompile Include="Systems\PositionFinalizeSystem.cpp" />
     <ClCompile Include="Systems\PositionUpdateSystem.cpp" />
+    <ClCompile Include="Systems\StaticVolumeOVerlapCallbackSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Components\DestroyEntityComponent.h" />
     <ClInclude Include="Components\NameComponent.h" />
     <ClInclude Include="Components\NextPositionComponent.h" />
     <ClInclude Include="Components\OnEntityDestroyedLuaCallbackComponent.h" />
+    <ClInclude Include="Components\OnVolumeOverlapLuaCallbackComponent.h" />
     <ClInclude Include="Components\PositionComponent.h" />
+    <ClInclude Include="Components\PreviousPositionComponent.h" />
+    <ClInclude Include="Components\StaticVolumeComponent.h" />
     <ClInclude Include="Components\VelocityComponent.h" />
     <ClInclude Include="DependencyContainer.h" />
+    <ClInclude Include="EntityFactory.h" />
     <ClInclude Include="EntityUtils.h" />
     <ClInclude Include="Logging\ConsoleLogProvider.h" />
     <ClInclude Include="Logging\LogManager.h" />
+    <ClInclude Include="LuaEnttBindings.h" />
+    <ClInclude Include="LuaManager.h" />
     <ClInclude Include="MethodHelperMacros.h" />
+    <ClInclude Include="RectangleF.h" />
     <ClInclude Include="Systems\DeadEntityCleanupSystem.h" />
     <ClInclude Include="Systems\PositionFinalizeSystem.h" />
     <ClInclude Include="Systems\PositionUpdateSystem.h" />
+    <ClInclude Include="Systems\StaticVolumeOverlapCallbackSystem.h" />
     <ClInclude Include="Systems\System.h" />
     <ClInclude Include="Systems\SystemRegistry.h" />
     <ClInclude Include="VandreLogging.h" />
     <ClInclude Include="Vector2f.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="scripts\test_script.lua">
+      <FileType>Text</FileType>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

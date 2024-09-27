@@ -5,6 +5,7 @@
 #include <VandreLogging.h>
 #include <Components/DestroyEntityComponent.h>
 #include <Components/PositionComponent.h>
+#include <Components/PreviousPositionComponent.h>
 #include <Components/NextPositionComponent.h>
 
 using namespace Components;
@@ -47,9 +48,9 @@ void PositionFinalizeSystem::TickEntity(
 	}
 	else
 	{
-		Vector2f oldPos = positionComponent.position;
+		const PreviousPositionComponent previousPosition = registry.emplace_or_replace<PreviousPositionComponent>(entity, positionComponent.position);
 		positionComponent.position = nextPosition;
-		Logger::WriteLine(entityName, " has moved from ", oldPos, " to ", positionComponent.position, ".");
+		Logger::WriteLine(entityName, " has moved from ", previousPosition.position, " to ", positionComponent.position, ".");
 	}
 
 	registry.remove<NextPositionComponent>(entity);
