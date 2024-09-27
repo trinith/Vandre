@@ -145,6 +145,7 @@
     <ClInclude Include="Components\DestroyEntityComponent.h" />
     <ClInclude Include="Components\NameComponent.h" />
     <ClInclude Include="Components\NextPositionComponent.h" />
+    <ClInclude Include="Components\OnEntityDestroyedLuaCallbackComponent.h" />
     <ClInclude Include="Components\PositionComponent.h" />
     <ClInclude Include="Components\VelocityComponent.h" />
     <ClInclude Include="DependencyContainer.h" />
