@@ -147,6 +147,7 @@
     <ClInclude Include="Components\NextPositionComponent.h" />
     <ClInclude Include="Components\PositionComponent.h" />
     <ClInclude Include="Components\VelocityComponent.h" />
+    <ClInclude Include="DependencyContainer.h" />
     <ClInclude Include="EntityUtils.h" />
     <ClInclude Include="Logging\ConsoleLogProvider.h" />
     <ClInclude Include="Logging\LogManager.h" />
