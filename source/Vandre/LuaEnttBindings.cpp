@@ -5,6 +5,7 @@
 #include <VandreLogging.h>
 #include <Components\OnEntityDestroyedLuaCallbackComponent.h>
 #include <Components\OnVolumeOverlapLuaCallbackComponent.h>
+#include <Components\DestroyEntityComponent.h>
 
 namespace
 {
@@ -44,11 +45,22 @@ void LuaEnttBindings::SetupEntityCreateFunctions(sol::state& lua, entt::registry
 		{
 			return EntityFactory::CreateStaticVolumeEntity(registry, volumeName, RectangleF{ x, y, w, h });
 		};
+}
 
+void LuaEnttBindings::SetupEntityUtilityFunctions(sol::state& lua, entt::registry& registry)
+{
 	lua["GetEntityName"] =
 		[&registry](const uint32_t entityId)
 		{
 			return EntityUtils::GetEntityName(registry, static_cast<entt::entity>(entityId));
+		};
+
+	lua["DestroyEntity"] =
+		[&registry](const uint32_t entityId)
+		{
+			entt::entity entity = static_cast<entt::entity>(entityId);
+			if (registry.valid(entity))
+				registry.emplace_or_replace<Components::DestroyEntityComponent>(entity);
 		};
 }
 

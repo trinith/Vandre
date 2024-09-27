@@ -40,5 +40,6 @@ function OnVolumeEntered(volumeEntity, entity)
 end
 
 function OnVolumeExited(volumeEntity, entity)
-	print("Lua::OnVolumeExited - " .. GetEntityName(entity) .. " has exited " .. GetEntityName(volumeEntity) .. ".")
+	print("Lua::OnVolumeExited - " .. GetEntityName(entity) .. " has exited " .. GetEntityName(volumeEntity) .. ". Registering it for destruction!")
+	DestroyEntity(entity);
 end
