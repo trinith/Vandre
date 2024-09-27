@@ -26,7 +26,7 @@ void DeadEntityCleanupSystem::OnExecute(float dt)
 		const std::string entityName = EntityUtils::GetEntityName(registry, entity);
 		
 		if (const OnEntityDestroyedLuaCallbackComponent* const luaCallbackComponent = registry.try_get<OnEntityDestroyedLuaCallbackComponent>(entity))
-			deadEntityCallbacks.emplace_back(entity, luaCallbackComponent->_luaCallback);
+			deadEntityCallbacks.emplace_back(entity, luaCallbackComponent->luaCallback);
 
 		registry.destroy(entity);
 		Logger::WriteLine(entityName, " has been destroyed.");
