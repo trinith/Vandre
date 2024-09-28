@@ -13,8 +13,9 @@ public:
 
 	LuaManager(const LuaManager&) = delete;
 	LuaManager& operator=(const LuaManager&) = delete;
-	LuaManager(LuaManager&&) = delete;
-	LuaManager& operator=(LuaManager&&) = delete;
+
+	LuaManager(LuaManager&&) noexcept;
+	LuaManager& operator=(LuaManager&&) noexcept;
 
 	sol::state& GetState() { return _lua; }
 	const sol::state& GetState() const { return _lua; }

@@ -1,5 +1,16 @@
 #include <LuaManager.h>
 
+LuaManager::LuaManager(LuaManager&& other) noexcept
+	: _lua{ std::move(other._lua) }
+{
+}
+
+LuaManager& LuaManager::operator=(LuaManager&& other) noexcept
+{
+	_lua = std::move(other._lua);
+	return *this;
+}
+
 void LuaManager::Execute(std::string_view scriptString)
 {
 	_lua.script(scriptString);
