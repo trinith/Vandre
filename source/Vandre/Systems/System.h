@@ -12,6 +12,8 @@ namespace Systems
 		{
 		}
 
+		virtual ~System() = default;
+
 		void Execute(float dt)
 		{
 			OnExecute(dt);
