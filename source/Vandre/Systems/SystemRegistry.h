@@ -9,6 +9,22 @@ namespace Systems
 	class SystemRegistry
 	{
 	public:
+		SystemRegistry() = default;
+
+		SystemRegistry(const SystemRegistry&) = delete;
+		SystemRegistry& operator=(const SystemRegistry&) = delete;
+
+		SystemRegistry(SystemRegistry&& other) noexcept
+			: _systems{ std::move(other._systems) }
+		{
+		}
+
+		SystemRegistry& operator=(SystemRegistry&& other) noexcept
+		{
+			_systems = std::move(other._systems);
+			return *this;
+		}
+
 		template <typename TSystem, typename... TArgs>
 		void RegisterSystem(TArgs&&... args)
 		{
