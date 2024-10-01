@@ -6,6 +6,6 @@ namespace Components
 {
 	struct OnEntityDestroyedLuaCallbackComponent
 	{
-		sol::function luaCallback;
+		std::vector<sol::function> callbacks;
 	};
 }

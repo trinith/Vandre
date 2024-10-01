@@ -25,14 +25,18 @@ void DeadEntityCleanupSystem::OnExecute(float dt)
 	{
 		const std::string entityName = EntityUtils::GetEntityName(registry, entity);
 		
-		if (const OnEntityDestroyedLuaCallbackComponent* const luaCallbackComponent = registry.try_get<OnEntityDestroyedLuaCallbackComponent>(entity))
-			deadEntityCallbacks.emplace_back(entity, luaCallbackComponent->luaCallback);
+		if (OnEntityDestroyedLuaCallbackComponent* const luaCallbackComponent = registry.try_get<OnEntityDestroyedLuaCallbackComponent>(entity))
+		{
+			// This component is getting destroyed along with the entity, so we can move all the callbacks into the temporary vector.
+			for (auto& callback : luaCallbackComponent->callbacks)
+				deadEntityCallbacks.emplace_back(entity, std::move(callback));
+		}
 
 		registry.destroy(entity);
 		Logger::WriteLine(entityName, " has been destroyed.");
 	}
 
-	// Notify any listeners that the entity was destroyed.
+	// Now that the entity is destroyed, we can inform any listeners that the entity ids are no longer valid.
 	for (const auto& [entity, callback] : deadEntityCallbacks)
 	{
 		if (callback)

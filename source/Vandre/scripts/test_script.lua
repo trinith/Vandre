@@ -32,7 +32,7 @@ function CreateEntityDefinition(name, x, y, dx, dy)
 end
 
 function OnEntityDestroyed(entity)
-	print("Lua::OnEntityDestroyed - Entity " .. entity .. " has been destroyed.");
+	print("Lua::OnEntityDestroyed - Entity id " .. entity .. " has been destroyed and is no longer valid.");
 end
 
 function OnVolumeEntered(volumeEntity, entity)

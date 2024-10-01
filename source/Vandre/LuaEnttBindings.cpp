@@ -75,7 +75,8 @@ void LuaEnttBindings::SetupCallbackFunctions(sol::state& lua, entt::registry& re
 			if (!IsCallbackValid("RegisterCallback_OnEntityDestroyed", callback))
 				return;
 
-			registry.emplace_or_replace<Components::OnEntityDestroyedLuaCallbackComponent>(entity, callback);
+			auto& entityDestroyedComponent = registry.emplace_or_replace<Components::OnEntityDestroyedLuaCallbackComponent>(entity);
+			entityDestroyedComponent.callbacks.emplace_back(callback);
 			Logger::WriteLine("RegisterCallback_OnEntityDestroyed - Successfully registered callback.");
 		};
 
