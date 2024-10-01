@@ -5,10 +5,9 @@
 #include <string>
 #include <unordered_map>
 
-struct DependencyContainer
+class DependencyContainer
 {
-	std::unordered_map<std::string, std::any> _components;
-
+public:
 	template <typename TType, typename... TArgs>
 	std::optional<std::reference_wrapper<TType>> AddComponent(TArgs&&... args)
 	{
@@ -35,4 +34,7 @@ struct DependencyContainer
 
 		return std::nullopt;
 	}
+
+private:
+	std::unordered_map<std::string, std::any> _components;
 };
