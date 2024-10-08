@@ -24,6 +24,7 @@ namespace Systems
 	private:
 		void TickEntity(
 			float dt,
+			entt::registry& registry,
 			entt::entity entity,
 			Components::PositionComponent& positionComponent,
 			const Components::NextPositionComponent& nextPositionComponent

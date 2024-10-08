@@ -22,6 +22,7 @@ void PositionFinalizeSystem::OnExecute(float dt)
 	{
 		TickEntity(
 			dt,
+			registry,
 			entity,
 			view.get<PositionComponent>(entity),
 			view.get<const NextPositionComponent>(entity)
@@ -31,12 +32,12 @@ void PositionFinalizeSystem::OnExecute(float dt)
 
 void PositionFinalizeSystem::TickEntity(
 	float dt,
+	entt::registry& registry,
 	entt::entity entity,
 	Components::PositionComponent& positionComponent,
 	const Components::NextPositionComponent& nextPositionComponent
 )
 {
-	auto& registry = GetRegistry();
 	const std::string entityName = EntityUtils::GetEntityName(registry, entity);
 
 	const Vector2f& nextPosition = nextPositionComponent.position;
