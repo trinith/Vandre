@@ -144,7 +144,6 @@
     <ClCompile Include="Systems\DeadEntityCleanupSystem.cpp" />
     <ClCompile Include="Systems\PositionFinalizeSystem.cpp" />
     <ClCompile Include="Systems\PositionUpdateSystem.cpp" />
-    <ClCompile Include="Systems\StaticVolumeOVerlapCallbackSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Components\DestroyEntityComponent.h" />
