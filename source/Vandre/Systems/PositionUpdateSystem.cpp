@@ -22,6 +22,7 @@ void PositionUpdateSystem::OnExecute(float dt)
 	{
 		TickEntity(
 			dt,
+			registry,
 			entity,
 			view.get<const PositionComponent>(entity),
 			view.get<const VelocityComponent>(entity)
@@ -31,6 +32,7 @@ void PositionUpdateSystem::OnExecute(float dt)
 
 void PositionUpdateSystem::TickEntity(
 	float dt,
+	entt::registry& registry,
 	entt::entity entity,
 	const Components::PositionComponent& positionComponent,
 	const Components::VelocityComponent& velocityComponent
@@ -39,7 +41,6 @@ void PositionUpdateSystem::TickEntity(
 	const Vector2f& position = positionComponent.position;
 	const Vector2f velocity = velocityComponent.velocity;
 
-	auto& registry = GetRegistry();
 	const std::string entityName = EntityUtils::GetEntityName(registry, entity);
 
 	registry.remove<Components::PreviousPositionComponent>(entity);
