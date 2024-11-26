@@ -39,7 +39,7 @@ void PositionUpdateSystem::TickEntity(
 )
 {
 	const Vector2f& position = positionComponent.position;
-	const Vector2f velocity = velocityComponent.velocity;
+	const Vector2f& velocity = velocityComponent.velocity;
 
 	const std::string entityName = EntityUtils::GetEntityName(registry, entity);
 
